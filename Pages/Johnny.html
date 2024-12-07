@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PF2Easy</title>
+  <script src = "/Files/script.js"></script>
+ 
+  <style>
+    body {
+	  background-image: url('/Files/old-brown-vintage-parchment-paper-texture.jpg');
+	  background-size: cover; /* Adjust background size as needed */
+	  background-repeat: repeat;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .header {
+      width: 100%;
+      background-color: #007bff;
+      color: #fff;
+      text-align: center;
+      padding: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: space-around;
+    }
+    .container {
+      margin-top: 50px;
+      padding: 20px;
+    }
+    .button-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      grid-gap: 10px;
+	  padding-top: 20px;
+    }
+    .move-button {
+      padding: 20px;
+      background-color: purple;
+      color: #fff;
+      border: none;
+      text-align: center;
+      cursor: pointer;
+      font-size: 18px;
+    }
+	
+	.popup {
+	  width: 300px;
+	  height: 400px;
+	  position: fixed;
+	  top: 50%;
+	  left: 50%;
+	  transform: translate(-50%, -50%);
+	  background-color: #fff;
+	  border: 1px solid #ccc;
+	  padding: 20px;
+	  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	  z-index: 9999;
+	}
+
+
+	
+	.armor-class-container {
+	  background-color: #dddddd; /* Gray background */
+	  color: #000000; /* Black text */
+	  flex: 1; /* Make labels and values fill the space evenly */
+	}
+
+	.fortitude-saving-throw-container {
+	  background-color: darkred; /* Dark red background */
+	  color: #000000; /* White text */
+	  flex: 1; /* Make labels and values fill the space evenly */
+	}
+
+	.reflex-saving-throw-container {
+	  background-color: green; /* Green background */
+	  color: #000000; /* Black text */
+	  flex: 1; /* Make labels and values fill the space evenly */
+	}
+
+	.will-saving-throw-container {
+	  background-color: blue; /* Blue background */
+	  color: #000000; /* White text */
+	  flex: 1; /* Make labels and values fill the space evenly */
+	}
+	
+	.label,
+	.value {
+	  margin: 0;
+	  padding: 10px; /* Add padding to labels and values */
+	  flex: 1; /* Make labels and values fill the space evenly */
+	}
+	
+	#nimble-dodge{
+		background-color: yellow;
+		color: black;
+	}
+	
+	#bio-button{
+		background-color: orange;
+		color: black;
+	}
+
+
+  </style>
+</head>
+<body>
+  <div class="header">
+  
+	<div class="armor-class-container">
+	  <div id="armor-class-label" class="label">AC</div>
+	  <div id="armor-class-value" class="value">20</div>
+	</div>
+	<div class="fortitude-saving-throw-container">
+	  <div id="fortitude-label" class="label">Fortitude</div>
+	  <div id="fortitude-value" class="value">+6</div>
+	</div>
+	<div class="reflex-saving-throw-container">
+	  <div id="reflex-label" class="label">Reflex</div>
+	  <div id="reflex-value" class="value">+11</div>
+	</div>
+	<div class="will-saving-throw-container">
+	  <div id="will-label" class="label">Will</div>
+	  <div id="will-value" class="value">+8</div>
+	</div>
+	<div class="perception-container">
+	  <div id="perception-label" class="label">Perception</div>
+	  <div id="perception-value" class="value">+8</div>
+	</div>
+	<button id = "skills-button">SKILLS</button>
+	<div id = "skills-data">
+		<div class="skill" data-name="Acrobatics" data-bonus="+8"></div>
+		<div class="skill" data-name="Arcana" data-bonus="+6"></div>
+		<div class="skill" data-name="Athletics" data-bonus="+5"></div>
+		<div class="skill" data-name="Crafting" data-bonus="+2"></div>
+		<div class="skill" data-name="Deception" data-bonus="+6"></div>
+		<div class="skill" data-name="Diplomacy" data-bonus="+4"></div>
+		<div class="skill" data-name="Intimidation" data-bonus="+4"></div>
+		<div class="skill" data-name="Lore" data-bonus="+4"></div>
+		<div class="skill" data-name="Medicine" data-bonus="+5"></div>
+		<div class="skill" data-name="Nature" data-bonus="+1"></div>
+		<div class="skill" data-name="Occultism" data-bonus="+6"></div>
+		<div class="skill" data-name="Performance" data-bonus="+0"></div>
+		<div class="skill" data-name="Religion" data-bonus="+1"></div>
+		<div class="skill" data-name="Society" data-bonus="+6"></div>
+		<div class="skill" data-name="Stealth" data-bonus="+8"></div>
+		<div class="skill" data-name="Survival" data-bonus="+5"></div>
+		<div class="skill" data-name="Thievery" data-bonus="+8"></div>
+	</div>
+  </div>
+  
+  <script>
+  
+  	const CharacterData = {
+      level: 			3,
+      maxHp: 			35,
+      currentHp: 		35,
+      strBonus: 		1,
+      dexBonus: 		4,
+      conBonus: 		1,
+      intBonus: 		2,
+      wisBonus: 		1,
+      chaBonus: 		0,
+      fortProf: 		1,
+      willProf: 		2,
+      rflxProf: 		2,
+      perceptionProf: 	2,
+      acrobaticsProf: 	1,
+      arcanaProf: 		1,
+      athleticsProf: 	1,
+      craftingProf: 	0,
+      deceptionProf: 	1,
+      diplomacyProf: 	1,
+      intimidationProf: 1,
+      loreProf: 		0,
+      medicineProf:		0,
+      natureProf: 		0,
+      occultismProf: 	1,
+      performanceProf: 	0,
+      religionProf: 	0,
+      societyProf: 		1,
+      stealthProf: 		1,
+      survivalProf: 	1,
+      thieveryProf: 	1
+    };
+	
+	
+	const CharacterDataAcrobaticsBonus = (CharacterData.acrobaticsProf * 2) + CharacterData.level + CharacterData.dexBonus;
+	const CharacterDataAthleticsBonus = (CharacterData.athleticsProf * 2) + CharacterData.level + CharacterData.strBonus;
+	const CharacterDataArcanaBonus = (CharacterData.arcanaProf * 2) + CharacterData.level + CharacterData.intBonus;
+	const CharacterDataCraftingBonus = (CharacterData.craftingProf * 2) + CharacterData.level + CharacterData.intBonus;
+	const CharacterDataDeceptionBonus = (CharacterData.deceptionProf * 2) + CharacterData.level + CharacterData.chaBonus;
+	const CharacterDataDiplomacyBonus = (CharacterData.diplomacyProf * 2) + CharacterData.level + CharacterData.chaBonus;
+	const CharacterDataIntimidationBonus = (CharacterData.intimidationProf * 2) + CharacterData.level + CharacterData.chaBonus;
+	const CharacterDataLoreBonus = (CharacterData.loreProf * 2) + CharacterData.level + CharacterData.intBonus;
+	const CharacterDataMedicineBonus = (CharacterData.medicineProf * 2) + CharacterData.level + CharacterData.wisBonus;
+	const CharacterDataNatureBonus = (CharacterData.natureProf * 2) + CharacterData.level + CharacterData.wisBonus;
+	const CharacterDataOccultismBonus = (CharacterData.occultismProf * 2) + CharacterData.level + CharacterData.intBonus;
+	const CharacterDataPerformanceBonus = (CharacterData.performanceProf * 2) + CharacterData.level + CharacterData.chaBonus;
+	const CharacterDataReligionBonus = (CharacterData.religionProf * 2) + CharacterData.level + CharacterData.intBonus;
+	const CharacterDataSocietyBonus = (CharacterData.societyProf * 2) + CharacterData.level + CharacterData.intBonus;
+	const CharacterDataStealthBonus = (CharacterData.stealthProf * 2) + CharacterData.level + CharacterData.dexBonus;
+	const CharacterDataSurvivalBonus = (CharacterData.survivalProf * 2) + CharacterData.level + CharacterData.wisBonus;
+	const CharacterDataThieveryBonus = (CharacterData.thieveryProf * 2) + CharacterData.level + CharacterData.dexBonus;
+	
+	document.querySelector('.skill[data-name="Acrobatics"]').setAttribute('data-bonus', `+${CharacterDataAcrobaticsBonus}`);
+	document.querySelector('.skill[data-name="Athletics"]').setAttribute('data-bonus', `+${CharacterDataAthleticsBonus}`);
+	document.querySelector('.skill[data-name="Arcana"]').setAttribute('data-bonus', `+${CharacterDataArcanaBonus}`);
+	document.querySelector('.skill[data-name="Crafting"]').setAttribute('data-bonus', `+${CharacterDataCraftingBonus}`);
+	document.querySelector('.skill[data-name="Deception"]').setAttribute('data-bonus', `+${CharacterDataDeceptionBonus}`);
+	document.querySelector('.skill[data-name="Diplomacy"]').setAttribute('data-bonus', `+${CharacterDataDiplomacyBonus}`);
+	document.querySelector('.skill[data-name="Intimidation"]').setAttribute('data-bonus', `+${CharacterDataIntimidationBonus}`);
+	document.querySelector('.skill[data-name="Lore"]').setAttribute('data-bonus', `+${CharacterDataLoreBonus}`);
+	document.querySelector('.skill[data-name="Medicine"]').setAttribute('data-bonus', `+${CharacterDataMedicineBonus}`);
+	document.querySelector('.skill[data-name="Nature"]').setAttribute('data-bonus', `+${CharacterDataNatureBonus}`);
+	document.querySelector('.skill[data-name="Occultism"]').setAttribute('data-bonus', `+${CharacterDataOccultismBonus}`);
+	document.querySelector('.skill[data-name="Performance"]').setAttribute('data-bonus', `+${CharacterDataPerformanceBonus}`);
+	document.querySelector('.skill[data-name="Religion"]').setAttribute('data-bonus', `+${CharacterDataReligionBonus}`);
+	document.querySelector('.skill[data-name="Society"]').setAttribute('data-bonus', `+${CharacterDataSocietyBonus}`);
+	document.querySelector('.skill[data-name="Stealth"]').setAttribute('data-bonus', `+${CharacterDataStealthBonus}`);
+	document.querySelector('.skill[data-name="Survival"]').setAttribute('data-bonus', `+${CharacterDataSurvivalBonus}`);
+	document.querySelector('.skill[data-name="Thievery"]').setAttribute('data-bonus', `+${CharacterDataThieveryBonus}`);
+  </script>
+	
+	
+	
+	//TODO: Make it so that the buttons are  dynamically generated from the character data
+  <div class="container">
+    <div class="button-grid">
+		<button id = "bio-button" class = "move-button" data-header = "A Cloaked Dude With Attitude!" data-body = "A scion to the kingpin of the Absalom underworld, zoron uses their connection to the plane of shadow and their penchant for throwing knives to cut out their own place in the world">ZORON</button>
+		<button id = "rapier-attack" class="move-button" data-header = "Rapier Attack" data-body = "<strong>One Action</strong><br> Make an attack roll (1d20+10) against a guy you're next to.<br> <br>If you hit, you deal <strong>2d6 + 5 damage</strong>. <br> <br>If they're <strong>Off-Balance</strong> you get <strong>+1d6 Damage</strong>.<br> <br>The bad guy also gets <strong>-2 to AC if they're off balance</strong>">SLASH EM @</button>
+		<button id = "dagger-attack" class="move-button" data-header = "Dagger Attack" data-body = "<strong>One Action</strong><br> Make an attack roll (1d20+8) against a guy you're close to. Every 2 squares away they are gives you a -2 to hit.<br> <br>If you hit, you deal <strong>1d4 + 4 damage</strong>. <br> <br>If they're <strong>Off-Balance</strong> you get <strong>+1d6 Damage</strong>.<br> <br>The bad guy also gets <strong>-2 to AC if they're off balance</strong>">THROW KNIFE @</button>
+		<button id = "shadow-blending" class="move-button" data-header = "Shadow Blending" data-body = "<strong>Reaction</strong><br> <br><strong>Trigger</strong> A creature attempts a flat check to target you while you're concealed or hidden due to dim light or darkness.<br> <br>You draw shadows close to create a shroud. The flat check to hit a concealed creature increases by 2 (typically to 7).">Shadow Blending <-'</button>
+		<button id = "nimble-dodge" class="move-button" data-header = "Nimble Dodge" data-body = "<strong>Reaction</strong><br> <br><strong>Trigger</strong> A creature targets you with an attack and you can see the attacker.<br> <br><strong>Requirements</strong>You are not encumbered.<br> <br>You deftly dodge out of the way, gaining a +2 circumstance bonus to AC against the triggering attack.">NIMBLE DODGE HI HELLO :D</button>
+		<button id = "underhanded-assault" class="move-button" data-header = "Underhanded Assault" data-body = "<strong>2 Actions</strong><br> <br>You capitalize on the distraction provided by an ally. You Sneak up to a foe adjacent to one of your allies. You can roll against the foe you're Sneaking up on, even if it's currently observing you, as though you were hidden. You take a –2 penalty on your Stealth check. If your Stealth check against the chosen foe succeeds, you can make a melee Strike against that foe at the end of your Sneak.">Underhanded Assault @@</button>
+		<button id = "glimpse-vulnerability" class="move-button" data-header="Glimpse Vulnerability" data-body= "<strong>1 Action</strong><br> <br><strong>Once per round;</strong><br> <br><strong>Requirement You are holding your implement;</strong><br> <br> Effect You glimpse a hidden vulnerability and then strengthen it to aid you. Select a creature you can see. Until you Glimpse Vulnerability again, that target gains <strong>weakness 2 against your Strikes.</strong>">Glimpse Vulnerability @</button>
+    </div>
+  </div>
+</body>
+</html>

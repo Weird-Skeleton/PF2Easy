@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PF2Easy</title>
+  <script src = "/Files/script.js"></script>
+ 
+  <style>
+    body {
+	  background-image: url('/Files/old-brown-vintage-parchment-paper-texture.jpg');
+	  background-size: cover; /* Adjust background size as needed */
+	  background-repeat: repeat;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .header {
+      width: 100%;
+      background-color: #007bff;
+      color: #fff;
+      text-align: center;
+      padding: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: space-around;
+    }
+    .container {
+      margin-top: 50px;
+      padding: 20px;
+    }
+    .button-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      grid-gap: 10px;
+	  padding-top: 20px;
+    }
+    .move-button {
+      padding: 20px;
+      background-color: green;
+      color: #fff;
+      border: none;
+      text-align: center;
+      cursor: pointer;
+      font-size: 18px;
+    }
+	
+	.popup {
+	  width: 300px;
+	  height: 400px;
+	  position: fixed;
+	  top: 50%;
+	  left: 50%;
+	  transform: translate(-50%, -50%);
+	  background-color: #fff;
+	  border: 1px solid #ccc;
+	  padding: 20px;
+	  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	  z-index: 9999;
+	}
+
+	
+	.armor-class-container {
+	  background-color: #dddddd; /* Gray background */
+	  color: #000000; /* Black text */
+	  flex: 1; /* Make labels and values fill the space evenly */
+	}
+
+	.fortitude-saving-throw-container {
+	  background-color: darkred; /* Dark red background */
+	  color: #000000; /* White text */
+	  flex: 1; /* Make labels and values fill the space evenly */
+	}
+
+	.reflex-saving-throw-container {
+	  background-color: green; /* Green background */
+	  color: #000000; /* Black text */
+	  flex: 1; /* Make labels and values fill the space evenly */
+	}
+
+	.will-saving-throw-container {
+	  background-color: blue; /* Blue background */
+	  color: #000000; /* White text */
+	  flex: 1; /* Make labels and values fill the space evenly */
+	}
+	
+	.label,
+	.value {
+	  margin: 0;
+	  padding: 10px; /* Add padding to labels and values */
+	  flex: 1; /* Make labels and values fill the space evenly */
+	}
+	
+	#bio-button{
+		background-color: orange;
+		color: black;
+	}
+
+
+  </style>
+</head>
+<body>
+  <div class="header">
+  
+	<div class="armor-class-container">
+	  <div id="armor-class-label" class="label">AC</div>
+	  <div id="armor-class-value" class="value">17</div>
+	</div>
+	<div class="fortitude-saving-throw-container">
+	  <div id="fortitude-label" class="label">Fortitude</div>
+	  <div id="fortitude-value" class="value">+11</div>
+	</div>
+	<div class="reflex-saving-throw-container">
+	  <div id="reflex-label" class="label">Reflex</div>
+	  <div id="reflex-value" class="value">+9</div>
+	</div>
+	<div class="will-saving-throw-container">
+	  <div id="will-label" class="label">Will</div>
+	  <div id="will-value" class="value">+9</div>
+	</div>
+	<div class="perception-container">
+	  <div id="perception-label" class="label">Perception</div>
+	  <div id="perception-value" class="value">+7</div>
+	</div>
+	<button id = "skills-button">SKILLS</button>
+	<div id = "skills-data">
+		<div class="skill" data-name="Acrobatics" data-bonus="+6"></div>
+		<div class="skill" data-name="Arcana" data-bonus="+0"></div>
+		<div class="skill" data-name="Athletics" data-bonus="-1"></div>
+		<div class="skill" data-name="Crafting" data-bonus="+0"></div>
+		<div class="skill" data-name="Deception" data-bonus="+6"></div>
+		<div class="skill" data-name="Diplomacy" data-bonus="+6"></div>
+		<div class="skill" data-name="Intimidation" data-bonus="+2"></div>
+		<div class="skill" data-name="Lore" data-bonus="+4"></div>
+		<div class="skill" data-name="Medicine" data-bonus="+2"></div>
+		<div class="skill" data-name="Nature" data-bonus="+6"></div>
+		<div class="skill" data-name="Occultism" data-bonus="4"></div>
+		<div class="skill" data-name="Performance" data-bonus="+6"></div>
+		<div class="skill" data-name="Religion" data-bonus="+2"></div>
+		<div class="skill" data-name="Society" data-bonus="+0"></div>
+		<div class="skill" data-name="Stealth" data-bonus="+6"></div>
+		<div class="skill" data-name="Survival" data-bonus="+2"></div>
+		<div class="skill" data-name="Thievery" data-bonus="+2"></div>
+	</div>
+  </div>
+  
+  <script>
+    const CharacterData = {
+      level: 			3,
+      maxHp: 			42,
+      currentHp:		42,			//Is currentHP needed? Or would another tracker just confuse things, with the inbuilt tracker in foundry?
+      strBonus: 		-1,
+      dexBonus: 		2,
+      conBonus: 		4,
+      intBonus: 		0,
+      wisBonus: 		2,
+      chaBonus: 		2,
+      fortProf: 		2,
+      willProf: 		2,
+      rflxProf: 		2,
+      perceptionProf: 	1,
+      acrobaticsProf: 	2,
+      arcanaProf: 		0,
+      athleticsProf: 	0,
+      craftingProf: 	0,
+      deceptionProf: 	1,
+      diplomacyProf: 	1,
+      intimidationProf: 0,
+      loreProf: 		1,
+      medicineProf: 	0,
+      natureProf: 		1,
+      occultismProf: 	1,
+      performanceProf: 	1,
+      religionProf: 	0,
+      societyProf: 		0,
+      stealthProf: 		1,
+      survivalProf: 	0,
+      thieveryProf: 	0
+    };
+	
+    const CharacterDataAcrobaticsBonus = (CharacterData.acrobaticsProf * 2) + CharacterData.level + CharacterData.dexBonus;
+	const CharacterDataAthleticsBonus = (CharacterData.athleticsProf * 2) + CharacterData.level + CharacterData.strBonus;
+	const CharacterDataArcanaBonus = (CharacterData.arcanaProf * 2) + CharacterData.level + CharacterData.intBonus;
+	const CharacterDataCraftingBonus = (CharacterData.craftingProf * 2) + CharacterData.level + CharacterData.intBonus;
+	const CharacterDataDeceptionBonus = (CharacterData.deceptionProf * 2) + CharacterData.level + CharacterData.chaBonus;
+	const CharacterDataDiplomacyBonus = (CharacterData.diplomacyProf * 2) + CharacterData.level + CharacterData.chaBonus;
+	const CharacterDataIntimidationBonus = (CharacterData.intimidationProf * 2) + CharacterData.level + CharacterData.chaBonus;
+	const CharacterDataLoreBonus = (CharacterData.loreProf * 2) + CharacterData.level + CharacterData.intBonus;
+	const CharacterDataMedicineBonus = (CharacterData.medicineProf * 2) + CharacterData.level + CharacterData.wisBonus;
+	const CharacterDataNatureBonus = (CharacterData.natureProf * 2) + CharacterData.level + CharacterData.wisBonus;
+	const CharacterDataOccultismBonus = (CharacterData.occultismProf * 2) + CharacterData.level + CharacterData.intBonus;
+	const CharacterDataPerformanceBonus = (CharacterData.performanceProf * 2) + CharacterData.level + CharacterData.chaBonus;
+	const CharacterDataReligionBonus = (CharacterData.religionProf * 2) + CharacterData.level + CharacterData.intBonus;
+	const CharacterDataSocietyBonus = (CharacterData.societyProf * 2) + CharacterData.level + CharacterData.intBonus;
+	const CharacterDataStealthBonus = (CharacterData.stealthProf * 2) + CharacterData.level + CharacterData.dexBonus;
+	const CharacterDataSurvivalBonus = (CharacterData.survivalProf * 2) + CharacterData.level + CharacterData.wisBonus;
+	const CharacterDataThieveryBonus = (CharacterData.thieveryProf * 2) + CharacterData.level + CharacterData.dexBonus;
+	
+	document.querySelector('.skill[data-name="Acrobatics"]').setAttribute('data-bonus', `+${CharacterDataAcrobaticsBonus}`);
+	document.querySelector('.skill[data-name="Athletics"]').setAttribute('data-bonus', `+${CharacterDataAthleticsBonus}`);
+	document.querySelector('.skill[data-name="Arcana"]').setAttribute('data-bonus', `+${CharacterDataArcanaBonus}`);
+	document.querySelector('.skill[data-name="Crafting"]').setAttribute('data-bonus', `+${CharacterDataCraftingBonus}`);
+	document.querySelector('.skill[data-name="Deception"]').setAttribute('data-bonus', `+${CharacterDataDeceptionBonus}`);
+	document.querySelector('.skill[data-name="Diplomacy"]').setAttribute('data-bonus', `+${CharacterDataDiplomacyBonus}`);
+	document.querySelector('.skill[data-name="Intimidation"]').setAttribute('data-bonus', `+${CharacterDataIntimidationBonus}`);
+	document.querySelector('.skill[data-name="Lore"]').setAttribute('data-bonus', `+${CharacterDataLoreBonus}`);
+	document.querySelector('.skill[data-name="Medicine"]').setAttribute('data-bonus', `+${CharacterDataMedicineBonus}`);
+	document.querySelector('.skill[data-name="Nature"]').setAttribute('data-bonus', `+${CharacterDataNatureBonus}`);
+	document.querySelector('.skill[data-name="Occultism"]').setAttribute('data-bonus', `+${CharacterDataOccultismBonus}`);
+	document.querySelector('.skill[data-name="Performance"]').setAttribute('data-bonus', `+${CharacterDataPerformanceBonus}`);
+	document.querySelector('.skill[data-name="Religion"]').setAttribute('data-bonus', `+${CharacterDataReligionBonus}`);
+	document.querySelector('.skill[data-name="Society"]').setAttribute('data-bonus', `+${CharacterDataSocietyBonus}`);
+	document.querySelector('.skill[data-name="Stealth"]').setAttribute('data-bonus', `+${CharacterDataStealthBonus}`);
+	document.querySelector('.skill[data-name="Survival"]').setAttribute('data-bonus', `+${CharacterDataSurvivalBonus}`);
+	document.querySelector('.skill[data-name="Thievery"]').setAttribute('data-bonus', `+${CharacterDataThieveryBonus}`);
+
+  </script>
+
+  <div class="container">
+    <div class="button-grid">
+	<button id = "bio-button" class = "move-button" data-header = "A Leen Green Prank Machine!" data-body = "A halfling with a penchant for mischief, they use their supernatural air currents to bully the battlefield">BOOG</button>
+      <button id = "aerial-boomerang" class="move-button" data-header="Aerial Boomerang" data-body="<strong>Two Actions</strong><br>A blade of shearing wind races away from you in a <strong>60-foot line</strong>. Each creature in the area takes <strong>2d4 slashing damage</strong> with a basic Reflex save against your class DC. In the final square of the line, the boomerang whirls in place until the end of your next turn. Any creature that ends its turn in that square has to save against the boomerang. <br>On your next turn, you can use a single action, which has the concentrate trait, to return the boomerang to you. It returns in a line from its square to your current location, with the same effect as the initial line, then the impulse ends. You must have line of effect to the boomerang and be within 60 feet of it.">Aerial Boomerang @@</button>
+      <button id = "air-cushion" class="move-button" data-header="Air Cushion" data-body="<strong>Reaction<br>Trigger</strong> A creature within 60 feet is falling. <br>Air currents flow upward to slow the target's fall to 60 feet per round. The cushion ends when the target reaches the ground, and the creature takes no damage from the fall. The cushion expires if the creature doesn't reach the ground within 1 minute, but any distance it fell during that minute doesn't count for any damage the creature would take from the fall. You can't use Air Cushion again while you have one in effect.">Air Cushion <-'</button>
+      <button id = "four-winds" class="move-button" data-header = "Four Winds" data-body = "<strong>Two Actions</strong><br>Target up to <strong>four willing creatures</strong> within 30 feet of you. Each of those creatures can <strong>Stride up to half its Speed</strong>. If it has a fly Speed, it can instead Fly up to half its fly Speed.">Four Winds @@</button>
+	  <button id = "elemental-blast" class="move-button" data-header = "Elemental Blast" data-body = "<strong>One or Two Actions</strong><br> Make an attack roll (1d20+8) against an enemy within 60 feet (12 squares).<br>If you hit, you deal 1d6 electricity or slashing damage. If you used two actions, add your Constitution (+4) to the damage.">Elemental Blast @ or @@</button>
+	  <button id = "prestidigitation" class="move-button" data-header = "Prestidigitation" data-body = "<strong>Two Actions</strong><br>You know some simple magical words to assist you in goofing off. You can do the following stuff with this spell.<br><strong>• Cook Cool, warm, or flavor</strong> 1 pound of nonliving material.
+<br>• <strong>Lift</strong> Slowly lift an unattended object of light Bulk or less 1 foot off the ground.
+<br>• <strong>Make</strong> Create a temporary object of negligible Bulk, made of congealed magical substance. The object looks crude and artificial and is extremely fragile - it can't be used as a tool, weapon, or locus or cost for a spell.
+<br>• <strong>Tidy Color, clean, or soil</strong> an object of light Bulk or less. You can affect an object of 1 Bulk with 10 rounds of concentration, and a larger object a 1 minute per Bulk. Prestidigitation can't deal damage or cause adverse conditions. Any actual change to an object (beyond what is noted above) persists only as long as you Sustain the spell.">Prestidigitation @@</button>
+	  <button id = "daze" class="move-button" data-header = "Daze" data-body = "<strong>Two Actions</strong><br>Range 60 feet;<br>Targets 1 creature<br>
+		Defense Will; Duration 1 round<br>
+		You push into the target's mind and daze it with a mental jolt. The jolt deals 2d6 mental damage, with a basic Will save. If the target critically fails the save, it is also stunned 1.">Daze @@</button>
+      <button id = "bon-mot" class="move-button" data-header = "Bon Mot" data-body = "<strong>One Actions</strong><br>You diss, insult, berate, or otherwise dunk on a foe within 30 feet (6 squares). Make a <strong>Diplomacy Check</strong> against their will DC (will save + 10).<br>Critical Success The target is distracted and takes a -3 status penalty to Perception and Will saves for 1 minute. <strong><i>They also take 2d4 mental damage.</i></strong> The target can end the effect early with a retort to your Bon Mot. This can either be a single action that has the concentrate trait or an appropriate skill action to frame their retort. The GM determines which skill actions qualify, though they must take at least 1 action. Typically, the retort needs to use a linguistic Charisma-based skill action.
+<br>Success As critical success, but the penalty is -2, and <strong><i>the mental damage is 1d4.</i></strong>
+<br>Critical Failure Your quip is atrocious. You take the same penalty an enemy would take had you succeeded. This ends after 1 minute or if you issue another Bon Mot and succeed.">Bon Mot @</button>
+	  <button id = "Goop-bomb" class="move-button" data-header = "Goop Bomb" data-body = "<strong>One Action</strong><br> Make an attack roll (1d20+3) against a guy within 60 feet (12 squares).<br>If you hit, you deal 1d8 Acid damage. The enemy has their speed reduced by 15 feet until they spend 3 actions to remove the thick green Goop. Additionally, until the Goop is removed, they take 1 acid damage per round.">Goop Bomb</button>
+    </div>
+  </div>
+</body>
+</html>

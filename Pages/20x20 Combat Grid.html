@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>20x20 Grid with Combat Tokens and Sidebar</title>
+    <style>
+        body {
+            display: flex;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(20, 50px);
+            grid-template-rows: repeat(20, 50px);
+            gap: 1px;
+            margin-right: 20px; /* Space between grid and sidebar */
+        }
+
+        .combat-grid-space {
+            width: 50px;
+            height: 50px;
+            background-color: lightgray;
+            border: 1px solid #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .combat-token {
+            width: 40px;
+            height: 40px;
+            background-color: blue;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .combat-token.red {
+            background-color: red;
+        }
+
+        .sidebar {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #f4f4f4;
+            justify-content: space-around; /* Evenly distribute buttons */
+            align-items: stretch;
+        }
+
+        .sidebar-button {
+            height: 40px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .sidebar-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<!-- TODO
+	- This is eventually supposed to be a simplified battle grid, allowing for quick combat simulations or tactics planning.
+	- The end goal for this page is the following
+		- Ability to add and remove custom tokens
+		- These tokens would have character sheet data linked to them, which could be accessed by clicking on them
+			- Add CharacterSheet.js? Maybe have multiple different types of data sheet for monsters/players/loot etc?
+		- Ability to roll To Hit rolls, Damage rolls, and Saving throws from any ability, by opening up their 2Easy sheet (Sidebar?)
+		- Clear battlefield button
+		- Give tokens custom indicators for status effects
+ -->
+
+<div class="grid-container">
+    <script>
+        for (let i = 0; i < 400; i++) {
+            document.write('<div class="combat-grid-space">');
+            if (i < 50) {
+                document.write('<div class="combat-token" onclick="toggleColor(this)"></div>');
+            }
+            document.write('</div>');
+        }
+
+        function toggleColor(element) {
+            element.classList.toggle('red');
+        }
+    </script>
+</div>
+
+<div class="sidebar">
+    <button class="sidebar-button">Button 1</button>
+    <button class="sidebar-button">Button 2</button>
+    <button class="sidebar-button">Button 3</button>
+    <button class="sidebar-button">Button 4</button>
+    <button class="sidebar-button">Button 5</button>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PF2Easy</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        .iframe-container {
+            display: flex;
+            height: 100vh;
+			overflow: hidden; /* Default to hidden for desktop */
+        }
+        .iframe-container.vertical {
+            flex-direction: column;
+			height: 100vh;
+			overflow-y: auto; /* Allow vertical scrolling */
+        }
+        iframe {
+            width: 50%;
+            height: 100%;
+            border: none;
+        }
+        .iframe-container.vertical iframe {
+            width: 100%;
+            height:100vh;		
+        }
+    </style>
+</head>
+<body>
+    <div class="iframe-container" id="iframeContainer">
+        <iframe src="/Pages/Felix.html" title="Felix Page"></iframe>
+        <iframe src="/Pages/Johnny.html" title="Johnny Page"></iframe>
+    </div>
+    <script>
+        function isMobileDevice() {
+            return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+        }
+
+        window.onload = function() {
+            var iframeContainer = document.getElementById('iframeContainer');
+            if (isMobileDevice()) {
+                iframeContainer.classList.add('vertical');
+            }
+        };
+    </script>
+</body>
+</html>
