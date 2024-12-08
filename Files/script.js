@@ -1,4 +1,28 @@
 document.addEventListener("DOMContentLoaded", function() {
+	
+	
+	
+  function updateCharacterSkillBonuses(CharacterData) {
+    const skills = [
+      'Acrobatics', 'Athletics', 'Arcana', 'Crafting', 'Deception', 'Diplomacy', 
+      'Intimidation', 'Lore', 'Medicine', 'Nature', 'Occultism', 'Performance', 
+      'Religion', 'Society', 'Stealth', 'Survival', 'Thievery'
+    ];
+
+   skills.forEach(skill => {
+      const profKey = `${skill.toLowerCase()}Prof`;  // Get the profession key dynamically
+      const bonusKey = `${skill.toLowerCase()}Bonus`;  // Get the bonus key dynamically
+
+      const skillBonus = (CharacterData[profKey] * 2) + CharacterData.level + CharacterData[`${skill.toLowerCase()}Bonus`];
+    
+      // Update the corresponding skill element in the DOM
+      const skillElement = document.querySelector(`.skill[data-name="${skill}"]`);
+      if (skillElement) {
+        skillElement.setAttribute('data-bonus', `+${skillBonus}`);
+      }
+    });
+  }
+
 
   var skillsButton = document.getElementById("skills-button");
   var skillsPopup = null;// Variable to store the skills popup window
