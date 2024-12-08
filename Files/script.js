@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	
 	
 	
-  function updateCharacterSkillBonuses(CharacterData) {
+  function calculateCharacterData(CharacterData) {
     const skills = [
       'Acrobatics', 'Athletics', 'Arcana', 'Crafting', 'Deception', 'Diplomacy', 
       'Intimidation', 'Lore', 'Medicine', 'Nature', 'Occultism', 'Performance', 
