@@ -106,7 +106,7 @@
   
 	<div class="armor-class-container">
 	  <div id="armor-class-label" class="label">AC</div>
-	  <div id="armor-class-value" class="value">0</div>
+	  <div id="armor-class-value" class="value">17</div>
 	</div>
 	<div class="fortitude-saving-throw-container">
 	  <div id="fortitude-label" class="label">Fortitude</div>
@@ -180,8 +180,50 @@
       thieveryProf: 	0
     };
 	
-	calculateCharacterData(CharacterData);
-
+    const CharacterDataAcrobaticsBonus = (CharacterData.acrobaticsProf * 2) + CharacterData.level + CharacterData.dexBonus;
+	const CharacterDataAthleticsBonus = (CharacterData.athleticsProf * 2) + CharacterData.level + CharacterData.strBonus;
+	const CharacterDataArcanaBonus = (CharacterData.arcanaProf * 2) + CharacterData.level + CharacterData.intBonus;
+	const CharacterDataCraftingBonus = (CharacterData.craftingProf * 2) + CharacterData.level + CharacterData.intBonus;
+	const CharacterDataDeceptionBonus = (CharacterData.deceptionProf * 2) + CharacterData.level + CharacterData.chaBonus;
+	const CharacterDataDiplomacyBonus = (CharacterData.diplomacyProf * 2) + CharacterData.level + CharacterData.chaBonus;
+	const CharacterDataIntimidationBonus = (CharacterData.intimidationProf * 2) + CharacterData.level + CharacterData.chaBonus;
+	const CharacterDataLoreBonus = (CharacterData.loreProf * 2) + CharacterData.level + CharacterData.intBonus;
+	const CharacterDataMedicineBonus = (CharacterData.medicineProf * 2) + CharacterData.level + CharacterData.wisBonus;
+	const CharacterDataNatureBonus = (CharacterData.natureProf * 2) + CharacterData.level + CharacterData.wisBonus;
+	const CharacterDataOccultismBonus = (CharacterData.occultismProf * 2) + CharacterData.level + CharacterData.intBonus;
+	const CharacterDataPerformanceBonus = (CharacterData.performanceProf * 2) + CharacterData.level + CharacterData.chaBonus;
+	const CharacterDataReligionBonus = (CharacterData.religionProf * 2) + CharacterData.level + CharacterData.intBonus;
+	const CharacterDataSocietyBonus = (CharacterData.societyProf * 2) + CharacterData.level + CharacterData.intBonus;
+	const CharacterDataStealthBonus = (CharacterData.stealthProf * 2) + CharacterData.level + CharacterData.dexBonus;
+	const CharacterDataSurvivalBonus = (CharacterData.survivalProf * 2) + CharacterData.level + CharacterData.wisBonus;
+	const CharacterDataThieveryBonus = (CharacterData.thieveryProf * 2) + CharacterData.level + CharacterData.dexBonus;
+	const CharacterDataFortitudeBonus = (CharacterData.fortProf * 2) + CharacterData.level + CharacterData.conBonus;
+	const CharacterDataWillBonus = (CharacterData.willProf * 2) + CharacterData.level + CharacterData.wisBonus;
+	const CharacterDataReflexBonus = (CharacterData.rflxProf * 2) + CharacterData.level + CharacterData.dexBonus;
+	const CharacterDataPerceptionBonus = (CharacterData.perceptionProf * 2) + CharacterData.level + CharacterData.wisBonus;
+	
+	document.querySelector('.skill[data-name="Acrobatics"]').setAttribute('data-bonus', `+${CharacterDataAcrobaticsBonus}`);
+	document.querySelector('.skill[data-name="Athletics"]').setAttribute('data-bonus', `+${CharacterDataAthleticsBonus}`);
+	document.querySelector('.skill[data-name="Arcana"]').setAttribute('data-bonus', `+${CharacterDataArcanaBonus}`);
+	document.querySelector('.skill[data-name="Crafting"]').setAttribute('data-bonus', `+${CharacterDataCraftingBonus}`);
+	document.querySelector('.skill[data-name="Deception"]').setAttribute('data-bonus', `+${CharacterDataDeceptionBonus}`);
+	document.querySelector('.skill[data-name="Diplomacy"]').setAttribute('data-bonus', `+${CharacterDataDiplomacyBonus}`);
+	document.querySelector('.skill[data-name="Intimidation"]').setAttribute('data-bonus', `+${CharacterDataIntimidationBonus}`);
+	document.querySelector('.skill[data-name="Lore"]').setAttribute('data-bonus', `+${CharacterDataLoreBonus}`);
+	document.querySelector('.skill[data-name="Medicine"]').setAttribute('data-bonus', `+${CharacterDataMedicineBonus}`);
+	document.querySelector('.skill[data-name="Nature"]').setAttribute('data-bonus', `+${CharacterDataNatureBonus}`);
+	document.querySelector('.skill[data-name="Occultism"]').setAttribute('data-bonus', `+${CharacterDataOccultismBonus}`);
+	document.querySelector('.skill[data-name="Performance"]').setAttribute('data-bonus', `+${CharacterDataPerformanceBonus}`);
+	document.querySelector('.skill[data-name="Religion"]').setAttribute('data-bonus', `+${CharacterDataReligionBonus}`);
+	document.querySelector('.skill[data-name="Society"]').setAttribute('data-bonus', `+${CharacterDataSocietyBonus}`);
+	document.querySelector('.skill[data-name="Stealth"]').setAttribute('data-bonus', `+${CharacterDataStealthBonus}`);
+	document.querySelector('.skill[data-name="Survival"]').setAttribute('data-bonus', `+${CharacterDataSurvivalBonus}`);
+	document.querySelector('.skill[data-name="Thievery"]').setAttribute('data-bonus', `+${CharacterDataThieveryBonus}`);
+	
+	document.getElementById("fortitude-value").textContent = `+${CharacterDataFortitudeBonus}`;
+	document.getElementById("will-value").textContent = `+${CharacterDataWillBonus}`;
+	document.getElementById("reflex-value").textContent = `+${CharacterDataReflexBonus}`;
+	document.getElementById("perception-value").textContent = `+${CharacterDataPerceptionBonus}`;
   </script>
 
   <div class="container">
