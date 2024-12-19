@@ -2,13 +2,13 @@ GOAL : Able to complete a full combat, with initiative order, HP, AC, Saves, tok
 SUB-GOALS
 	- Able to read a character sheet from json
 		- Need to read the following items
-			- Max HP
+			- Max HP [DONE]
 			- Current HP (Not read, set to max at run time)
-			- AC
+			- AC [DONE]
 			- Will Save
 			- Fort Save
 			- Refl Save
-			- Level
+			- Level [DONE]
 			- All Skills
 		- Update Felix and Johnny to use new implementation
 			- Remove Felix.HTML and Johnny.HTML, replace with a single PF2EasySheet.HTML.

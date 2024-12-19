@@ -3,7 +3,10 @@ class Character {
   constructor(jsonSheet) {
 	  try{
 		  this.characterData = JSON.parse(jsonSheet);
-		  this.name = characterData.name;
+		  this.name = characterData.build.name;
+		  this.level = characterData.build.level;
+		  this.maxHP = characterData.build.attributes.ancestryhp + ((characterData.build.attributes.classhp + ((characterData.build.abilities.con - 10 ) / 2)) * characterData.build.level) + characterData.build.attributes.bonushp;
+		  this.ACTotal = characterData.build.acTotal.acTotal;
 	  }
 	  catch (error){
 		  console.error("Error Reading JSON file", error);
