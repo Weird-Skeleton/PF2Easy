@@ -1,0 +1,25 @@
+GOAL : Able to complete a full combat, with initiative order, HP, AC, Saves, token death/removal.
+SUB-GOALS
+	- Able to read a character sheet from json
+		- Need to read the following items
+			- Max HP
+			- Current HP (Not read, set to max at run time)
+			- AC
+			- Will Save
+			- Fort Save
+			- Refl Save
+			- Level
+			- All Skills
+		- Update Felix and Johnny to use new implementation
+			- Remove Felix.HTML and Johnny.HTML, replace with a single PF2EasySheet.HTML.
+				- When a token is clicked, open this sheet as a side bar
+	- Able to compile a list of action buttons dynamically
+		- From seperate json file? Could I add to the exported sheet?
+		- Just core combat moves
+	- Token Placement
+		- For now, tokens can load pre-placed.
+		- Movement/ No animations for now, just teleporting tokens will work
+		- Tokens need icons
+	- Background
+		- Simpler is better. 
+		- Road, no trees or height differences
