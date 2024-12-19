@@ -5,9 +5,9 @@ SUB-GOALS
 			- Max HP [DONE]
 			- Current HP (Not read, set to max at run time)
 			- AC [DONE]
-			- Will Save
-			- Fort Save
-			- Refl Save
+			- Will Save [DONE]
+			- Fort Save [DONE]
+			- Refl Save [DONE]
 			- Level [DONE]
 			- All Skills
 		- Update Felix and Johnny to use new implementation

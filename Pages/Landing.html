@@ -38,17 +38,35 @@
         <iframe src="/Pages/Felix.html" title="Felix Page"></iframe>
         <iframe src="/Pages/Johnny.html" title="Johnny Page"></iframe>
     </div>
+	
+	<script src="/Files/script.js"></script>
+	
+	
     <script>
+		fetch('/Files/Characters/Charlie.json')
+			.then(response => {
+				console.log("Fetching JSON file...");
+				return response.json();
+			})
+			.then(data => {
+				const character = new Character(JSON.stringify(data));
+				console.log(character.fortitudeTotal);  // Log the character's name
+			})
+			.catch(error => {
+				console.error('Error loading character data:', error);
+				console.log("Fetch failed.");
+			});
+	
         function isMobileDevice() {
             return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
         }
-
+		
         window.onload = function() {
             var iframeContainer = document.getElementById('iframeContainer');
             if (isMobileDevice()) {
                 iframeContainer.classList.add('vertical');
             }
-        };
+        };		
     </script>
 </body>
 </html>

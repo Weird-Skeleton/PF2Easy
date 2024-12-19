@@ -1,18 +1,58 @@
-// Character class declaration
 class Character {
   constructor(jsonSheet) {
-	  try{
-		  this.characterData = JSON.parse(jsonSheet);
-		  this.name = characterData.build.name;
-		  this.level = characterData.build.level;
-		  this.maxHP = characterData.build.attributes.ancestryhp + ((characterData.build.attributes.classhp + ((characterData.build.abilities.con - 10 ) / 2)) * characterData.build.level) + characterData.build.attributes.bonushp;
-		  this.ACTotal = characterData.build.acTotal.acTotal;
-	  }
-	  catch (error){
-		  console.error("Error Reading JSON file", error);
-	  }
+    try {
+      this.characterData = JSON.parse(jsonSheet);  // Define this.characterData
+      this.name = this.characterData.build.name;   // Use this.characterData
+      this.level = this.characterData.build.level;
+      this.charClass = this.characterData.build.class;
+      this.maxHP = this.characterData.build.attributes.ancestryhp + 
+                   ((this.characterData.build.attributes.classhp + 
+                     ((this.characterData.build.abilities.con - 10) / 2)) * this.characterData.build.level) + 
+                   this.characterData.build.attributes.bonushp;
+      this.curHP = this.maxHP;  // Saving cur HP will be implemented in future update
+      this.ACTotal = this.characterData.build.acTotal.acTotal;
+
+      for (const [key, value] of Object.entries(this.characterData.build.proficiencies)) {
+        this.abilityKey = "";
+        if (key === "athletics" || key === "advanced" || key === "martial" || key === "simple" || key === "unarmed") {
+          this.abilityKey = "str";
+        }
+        if (key === "reflex" || key === "heavy" || key === "medium" || key === "light" || key === "unarmored" || key === "acrobatics" || key === "stealth" || key === "thievery") {
+          this.abilityKey = "dex";
+        }
+        if (key === "fortitude") {
+          this.abilityKey = "con";
+        }
+        if (key === "castingArcane" || key === "arcana" || key === "crafting" || key === "occultism" || key === "society") {
+          this.abilityKey = "int";
+        }
+        if (key === "will" || key === "castingPrimal" || key === "castingDivine" || key === "medicine" || key === "nature" || key === "perception" || key === "religion" || key === "survival") {
+          this.abilityKey = "wis";
+        }
+        if (key === "deception" || key === "diplomacy" || key === "intimidation" || key === "castingOccult" || key === "performance") {
+          this.abilityKey = "cha";
+        }
+        this[key + "Total"] = this.calculateProficiencyTotal(key,this.abilityKey);
+      }
+
+      for (const [key, value] of Object.entries(this.characterData.build.lores)) {
+        this.abilityKey = "int";
+        this[key + "Total"] = this.calculateProficiencyTotal(key,this.abilityKey);
+      }
+	  
+	  
+    } catch (error) {
+      console.error("Error Reading JSON file", error);
+    }
+  }
+
+  calculateProficiencyTotal(proficiencyKey, abilityKey) {
+    const proficiencyValue = this.characterData.build.proficiencies[proficiencyKey];
+    const abilityModifier = ((this.characterData.build.abilities[abilityKey] - 10) / 2);
+    return proficiencyValue + this.level + abilityModifier;
   }
 }
+
 
 // Document ready event
 document.addEventListener("DOMContentLoaded", function () {
